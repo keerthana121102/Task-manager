@@ -8,7 +8,10 @@ import { TaskService } from 'src/app/task.service';
   styleUrls: ['./new-task.component.scss'],
 })
 export class NewTaskComponent implements OnInit {
+ 
+ 
   listId: string;
+  
   
   constructor(
     private taskService: TaskService,
@@ -18,14 +21,19 @@ export class NewTaskComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => (this.listId = params.listId)
     );
+    console.log(this.listId);
   }
 
   ngOnInit(): void {}
   addTask(value: string) {
     this.taskService
-      .createTasks(this.listId, value)
+      .createTasks(value,this.listId)
       .subscribe(() =>
         this.router.navigate(['../'], { relativeTo: this.route })
       );
+      console.log(value);
+      console.log(this.listId);
+      
+      
   }
 }
