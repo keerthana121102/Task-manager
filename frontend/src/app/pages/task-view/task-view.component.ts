@@ -26,10 +26,12 @@ export class TaskViewComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       console.log('[+]Task ',this.listId)
       this.listId = params.listId;
-      // if (!this.listId) return;
+      if (!this.listId) {
+        this.taskService.getAllTask().subscribe((tasks: any) => this.tasks = tasks);
+      }
       this.taskService
-        // .getTasks(this.listId)
-        .getAllTask()
+        .getTasks(this.listId)
+        // .getAllTask()
         .subscribe((tasks: any) => this.tasks = tasks);
         console.log(this.listId);
         
@@ -39,5 +41,10 @@ export class TaskViewComponent implements OnInit {
 
   onTaskClick(task: Task){
       this.taskService.setCompleted(task._listId,task).subscribe(() => task.completed = !task.completed);
+  }
+  onListClick(list:List){
+    console.log('[+]List clicked ',list)
+    this.listId=list._id
+    this.ngOnInit()
   }
 }

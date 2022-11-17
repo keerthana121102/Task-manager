@@ -81,13 +81,16 @@ app.get('/getAllTask',(req,res)=>{
     })
 })
 
-app.get('/lists/:listId/tasks/:taskId',(req,res)=>{
+app.put('/lists/:listId/task/:taskId',(req,res)=>{
     Task.findOne({_listId: req.params.listId,_id:req.params.taskId})
-    .then((task)=>res.send(task))
+    .then(async(task)=>{
+        task.completed=!task.completed
+        await task.save();
+        res.send(task)})
     .catch((error)=> console.log(error));
 });
 
-app.
+
 
 //to update a task
 /*
